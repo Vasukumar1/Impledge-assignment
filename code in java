@@ -1,0 +1,84 @@
+//Code for impledge assignment by Vasu Kumar Miet(B.Tech CSE(AI))
+import java.io.*;
+import java.util.*;
+
+public class CompoundWordFinder {
+
+    public static void main(String[] args) throws IOException {
+        String fileName = "Input_01.txt"; // Replace with "Input_02.txt" for the second input file
+
+        // Step 1: Read words from the file into a list
+        List<String> words = readFile(fileName);
+
+        // Step 2: Sort words by their length
+        for (int i = 0; i < words.size() - 1; i++) {
+            for (int j = i + 1; j < words.size(); j++) {
+                if (words.get(i).length() > words.get(j).length()) {
+                    String temp = words.get(i);
+                    words.set(i, words.get(j));
+                    words.set(j, temp);
+                }
+            }
+        }
+
+        // Step 3: Use a HashSet for quick lookup
+        Set<String> wordSet = new HashSet<>(words);
+
+        String longestWord = "";
+        String secondLongestWord = "";
+
+        // Step 4: Find the longest and second-longest compound words
+        for (int i = 0; i < words.size(); i++) {
+            String word = words.get(i);
+            wordSet.remove(word); // Temporarily remove the word to prevent self-composition
+
+            if (isCompound(word, wordSet)) {
+                if (word.length() > longestWord.length()) {
+                    secondLongestWord = longestWord;
+                    longestWord = word;
+                } else if (word.length() > secondLongestWord.length()) {
+                    secondLongestWord = word;
+                }
+            }
+
+            wordSet.add(word); // Add the word back
+        }
+
+        // Step 5: Print the results
+        System.out.println("Longest Compound Word: " + longestWord);
+        System.out.println("Second Longest Compound Word: " + secondLongestWord);
+    }
+
+    // Reads all words from the file and returns them as a list
+    private static List<String> readFile(String fileName) throws IOException {
+        List<String> words = new ArrayList<>();
+        BufferedReader reader = new BufferedReader(new FileReader(fileName));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            words.add(line.trim());
+        }
+        reader.close();
+        return words;
+    }
+
+    // Checks if a word can be formed by combining other words in the set
+    private static boolean isCompound(String word, Set<String> wordSet) {
+        if (wordSet.isEmpty()) {
+            return false;
+        }
+
+        boolean[] dp = new boolean[word.length() + 1];
+        dp[0] = true; // Empty string can always be formed
+
+        for (int i = 1; i <= word.length(); i++) {
+            for (int j = 0; j < i; j++) {
+                if (dp[j] && wordSet.contains(word.substring(j, i))) {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+
+        return dp[word.length()];
+    }
+}
