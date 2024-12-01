@@ -1,18 +1,15 @@
 Search the longest compounded word assignment.
-**NOTE**:-> This program is created by me by learning Hashset concept in Java.I have tested it in VS Code Editor.
-First, the program reads all the words from the file and sorts them based on their length, so smaller words are checked first. 
-Then it checks each word to see if it can be formed by combining other words in the list. It uses a HashSet to make checking faster. While processing, it keeps track of the two longest compound words.
-Finally, the program shows the longest and second-longest compound words in the console. 
-To run this, just put the input file (e.g., Input_01.txt) in the same folder as the program, compile it, and run it.
-Make sure the input file has one word per line, and the words are sorted alphabetically.
-I have learnt and implemented this program as simple, beginner-friendly, and shows a clear approach to solving the problem.
-Hopefully you would consider it.
-Thanking you
-Vasu Kumar
-B.Tech - CSE(AI)
-Meerut Institute of Engineering and Technology.
-
-
+**NOTE**:-> This program is created by me by learning ArrayList concept in Java. It took me 2 days to implement it .I have tested it in VS Code Editor.
+How the Program Works
+Input File Reading:
+The program reads each word from the file and stores it in a list. The input files should contain one lowercase word per line with no extra characters.
+Compound Word Identification:
+For each word, the program attempts to split it into a prefix and a suffix.
+It checks if the prefix is a valid word and if the suffix is either a valid word or can itself be broken into smaller words recursively.
+Longest Word Tracking:
+As each compound word is identified, the program compares its length with the currently tracked longest and second-longest compound words, updating them as necessary.
+Output:
+The program outputs the longest and second-longest compound words for each input file in the console.
 
 
 
